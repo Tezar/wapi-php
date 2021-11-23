@@ -1,7 +1,7 @@
 <?php
 namespace Wapi;
 
-class Domain
+class Domain extends DataObject
 {
     /** @var Wapi */
     private $wapi;    
@@ -17,13 +17,5 @@ class Domain
     public function dnsRecords()
     {
         return $this->wapi->dnsRowsList($this->name);
-    }
-
-    protected function loadFrom($data) 
-    {
-        foreach($data as $k => $v) {
-            // todo convert type by $k 
-            $this->$k = (string) $v;
-        }
     }
 }
