@@ -25,8 +25,12 @@ class Wapi
         return sha1($this->user.$this->hashedPass.date('H', time()));
     }
 
-    public function send($command, $data = null)
+    public function send($command, $data = null, $type = 'xml')
     {
+        if ( ! in_array($type, ['json', 'xml'])) {
+            throw new Exception("$type not supported");
+        }
+
         $request = new Request(
             $this->user,
             $this->getAuth(),
@@ -34,12 +38,13 @@ class Wapi
             $data
         );
         
+
         // address
-        $url = 'https://api.wedos.com/wapi/xml';
+        $url = 'https://api.wedos.com/wapi/'.$type;
 
         // POST data
-        $post = 'request='.urlencode($request->toXML());
-
+        $post = 'request='.urlencode( $type == 'xml' ? $request->toXML() : $request->toJSON() );
+        bdump($post);
         // initialization cURL session
         $ch = curl_init();
 
@@ -69,7 +74,7 @@ class Wapi
         }
         curl_close($ch);
 
-        $response = Response::fromString($res);
+        $response = $type == 'xml' ? Response::fromXML($res) : Response::fromJSON($res) ;
 
         if ( ! $response->isOk()) {
             throw new Exception($response->command.': '.$response->result, $response->code);

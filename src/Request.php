@@ -39,6 +39,20 @@ class Request
         }
     }
 
+    public function toJson():string
+    {
+        $payload = [
+            'user' => $this->user,
+            'auth' => $this->auth,
+            'command' => $this->command,
+            'clTRID' => implode('_', ['wapi', static::$cnt++, $this->command]),
+        ];
+        
+        if ( $this->data ) {
+            $payload['data'] = $this->data;
+        }
+        return json_encode(['request' => $payload]);
+    }
 
     public function toXML():string
     {
