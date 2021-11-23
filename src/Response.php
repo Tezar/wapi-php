@@ -43,7 +43,6 @@ class Response
     {
         $decoded = json_decode($data);
         $response = $decoded->response;
-        bdump($response);
 
         if (json_last_error()) {
             throw new Exception('Unable to parse input JSON '

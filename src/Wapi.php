@@ -1,6 +1,10 @@
 <?php
 namespace Wapi;
 
+
+/**
+ * @property-read Account $account
+ */
 class Wapi
 {
     /**
@@ -38,13 +42,12 @@ class Wapi
             $data
         );
         
-
         // address
         $url = 'https://api.wedos.com/wapi/'.$type;
 
         // POST data
         $post = 'request='.urlencode( $type == 'xml' ? $request->toXML() : $request->toJSON() );
-        bdump($post);
+
         // initialization cURL session
         $ch = curl_init();
 
@@ -106,7 +109,22 @@ class Wapi
         }
         return $result;
     }
-    
+
+    public function __get($name)
+    {
+        if (in_array($name, ['account'])) {
+            $class = 'Wapi\\'.ucfirst($name);
+            return new $class($this);
+        }
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined endpoint: ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line'],
+            E_USER_NOTICE);
+    }
+
     public function dnsRowsList(string $domainName) 
     {
         $response = $this->send('dns-rows-list', ['domain' => $domainName]);

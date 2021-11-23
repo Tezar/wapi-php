@@ -8,8 +8,9 @@ WIP - implementováno pouze to co je momentálně potřeba. PR vítány.
 | endpoint  |  metoda |
 | ------------ | ------------ |
 | ping  | ping   |
-| domains-list  | domains   |
-| dns-rows-list  | dnsRowsList  |
+| domains-list  | domains()   |
+| dns-rows-list  | dnsRowsList($domain)  |
+| credit-info  | account->credit()  |
 
 
 **POUŽITÍ**
