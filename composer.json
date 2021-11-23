@@ -1,0 +1,22 @@
+{
+  "name": "tezar/wapi-php",
+  "type": "library",
+  "description": "Wedos API (WAPI) PHP client",
+  "keywords": ["wapi", "wedos", "api", "php"],
+  "homepage": "https://github.com/tezar/wapi-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aleš Tomeček",
+      "email": "ales.tomecek@lewest.cz",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
